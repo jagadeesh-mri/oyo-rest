@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="implementation-test-suite.xml" />
+	<global-property doc:name="Global Property" doc:id="f0258d72-0fe4-443f-9caf-2c0dcd149e7f" name="encKey" value="mulesofttraining" />
+	<munit:test name="implementation-test-suite-getHotelsByCityFlowImplTest" doc:id="daeade5a-b525-4133-854a-448112510722" description="Test">
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="441a9ec0-d047-4cf8-8ef1-a1894f0a289f" >
+				<munit:attributes value='{&#10;     queryParams: {&#10;              "city": "Bangalore"&#10;     }&#10;}' mediaType="application/dw" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to getHotelsByCityFlowImpl" doc:id="e8a19661-ad64-41a8-869c-e25504290b3d" name="getHotelsByCityFlowImpl"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="d9a850ef-6b4f-4a3b-a213-b646097bd040" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+			<munit-tools:assert-that doc:name="Assert that" doc:id="5dbce976-1809-4527-8dc4-db07813dcd71" expression="#[payload]" is='#[MunitTools::withMediaType("application/json")]'/>
+			<munit-tools:assert-that doc:name="Assert that" doc:id="69a2500b-0438-4006-b995-d9015d3e857c" expression="#[sizeOf(payload)]" is="#[MunitTools::greaterThan(0)]"/>
+			<foreach doc:name="For Each" doc:id="98ba4e75-0a89-4769-9621-dbd04aaa23f5" >
+				<munit-tools:assert-that doc:name="Assert that" doc:id="66171993-7d5f-4468-ab2a-769b917d8f2f" is='#[MunitTools::equalTo("Bangalore")]' expression="#[payload.city]"/>
+			</foreach>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="implementation-test-suite-getHotelsByHotelIdFlowImplTest" doc:id="f670ebcb-6c53-483c-8159-e92d259f1d4f" description="Test">
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="1d1a8ba9-2e6d-4040-962f-8f2ca4dd8cdd" >
+				<munit:attributes value="{&#10;    uriParams: {&#10;        hotelId: 6&#10;    }&#10;}" mediaType="application/dw" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to getHotelsByHotelIdFlowImpl" doc:id="f0cc75c2-d7d8-48d5-a3a6-7801f799c7bd" name="getHotelsByHotelIdFlowImpl"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="f45ab732-d919-4557-b191-a46a1da5f2f0" expression="#[payload]" is="#[MunitTools::notNullValue()]" />
+			<munit-tools:assert-that doc:name="Assert that" doc:id="b3c7c4ba-7a02-44d0-a62c-6bceb10e67e1" expression="#[payload]" is='#[MunitTools::withMediaType("application/json")]' />
+			<munit-tools:assert-that doc:name="Assert that" doc:id="f3879d9b-6c98-4286-b027-c098e5b374b4" is='#[MunitTools::equalTo(6)]' expression="#[payload.ID]" />
+		</munit:validation>
+	</munit:test>
+
+
+</mule>
