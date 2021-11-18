@@ -47,7 +47,7 @@
 						<environment>Sandbox</environment>
 						<!-- <region>${region}</region> -->
 						<workers>1</workers>
-						<workerType>XXXXLARGE</workerType>
+						<workerType>MICRO</workerType>
 						<properties>
 							<encKey>mulesofttraining</encKey>
 							<env>prod</env>
